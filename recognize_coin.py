@@ -7,7 +7,6 @@ from PIL import Image
 import torch
 import clip
 
-# Silenciar logs do YOLO
 from ultralytics.utils import LOGGER
 import logging
 LOGGER.setLevel(logging.ERROR)
@@ -83,7 +82,6 @@ def main():
         respond({"error": "Image file does not exist", "path": image_path})
         return
 
-    # 1. CARREGAR IMAGEM
     image = cv2.imread(image_path)
     if image is None:
         respond({"error": "Unable to read image file"})
@@ -92,7 +90,6 @@ def main():
     saved_original = os.path.join(os.path.dirname(__file__), "temp_original.jpg")
     cv2.imwrite(saved_original, image)
 
-    # 2. CARREGAR MODELO YOLO
     model_path = r"C:\Users\Usuario\.pyenv\runs\detect\train26\weights\best.pt"
     if not os.path.exists(model_path):
         respond({"error": "YOLO model not found", "expected_path": model_path})
@@ -104,7 +101,6 @@ def main():
         respond({"error": "Failed to load YOLO model", "details": str(e)})
         return
 
-    # 3. DETECÇÃO
     try:
         results = model(image, verbose=False)
         result = results[0]
@@ -136,7 +132,6 @@ def main():
     temp_crop_path = os.path.join(os.path.dirname(__file__), "temp_crop.jpg")
     cv2.imwrite(temp_crop_path, cropped)
 
-    # 4. IDENTIFICAR MOEDA VIA EMBEDDINGS
     match, score = find_best_match(temp_crop_path)
 
     respond({
