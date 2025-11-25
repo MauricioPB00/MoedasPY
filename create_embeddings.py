@@ -5,10 +5,8 @@ import clip
 from PIL import Image
 from tqdm import tqdm
 
-# Caminho onde estão as imagens das moedas (obverse e reverse)
 IMAGES_DIR = r"C:\Users\Usuario\Documents\Moedas\Moedas\src\assets\img\imagens"
 
-# Arquivo final com todos os embeddings
 OUTPUT_FILE = "moedas_embeddings.json"
 
 def load_clip_model():
@@ -54,12 +52,10 @@ def main():
 
         entry = {"id": int(id_str)}
 
-        # Embedding do OBVERSE
         entry["embedding_obverse"] = generate_embedding(
             model, preprocess, device, obv_path
         )
 
-        # Embedding do REVERSE
         if os.path.exists(rev_path):
             entry["embedding_reverse"] = generate_embedding(
                 model, preprocess, device, rev_path
