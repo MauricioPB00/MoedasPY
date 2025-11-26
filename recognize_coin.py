@@ -18,9 +18,6 @@ def respond(obj):
     print(json.dumps(obj, ensure_ascii=False))
 
 
-# ============================
-# UTILITÁRIOS DE EMBEDDINGS
-# ============================
 def cosine_similarity(a, b):
     return float(np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b)))
 
@@ -68,9 +65,6 @@ def find_best_match(crop_path):
     return best, best_score
 
 
-# ============================
-# MAIN YOLO + MATCHING
-# ============================
 def main():
     if len(sys.argv) < 2:
         respond({"error": "No image path received"})
